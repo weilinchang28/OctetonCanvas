@@ -38,12 +38,44 @@ void loop()
   while ( network.available() ) {     // Is there any incoming data?
     RF24NetworkHeader header;
     //unsigned long incomingData;
-    char text1;
-    network.read(header, & text1, sizeof(text1));
+
+    int text;
+    
+    int output1;
+    int output2; 
+    int output3;
+    int output4;
+    
+    network.read(header, &text, sizeof(text));
+    if(header.from_node == 1)
+    {
+      output1 = text;
+    }
+    if(header.from_node == 2)
+    {
+      output2 = text;
+    }
+    if(header.from_node == 3)
+    {
+      output3 = text;
+    }
+    if(header.from_node == 4)
+    {
+      output4 = text;
+    }
+
+    Serial.print (output1);
+    Serial.print (" ");
+    Serial.print (output2);
+    Serial.print (" ");
+    Serial.print (output3);
+    Serial.print (" ");
+    Serial.println (output4);
+    
+    // network.read(header, & text1, sizeof(text1));
+    // network.read(header, & text2, sizeof(text2));
     // network.read(header, &incomingData, strlen(incomingData)); // Read the incoming data
     // analogWrite(led, incomingData);    // PWM output to LED 01 (dimming)
-
-    Serial.println(text1);
   }
 
   

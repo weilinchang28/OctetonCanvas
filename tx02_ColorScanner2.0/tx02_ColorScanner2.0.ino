@@ -5,7 +5,7 @@
 
 RF24 radio(9, 10); // create an RF24 object, CE, CSN 
 RF24Network network(radio);      // Include the radio in the network
-const uint16_t this_node = 01;   // Address of our node in Octal format ( 04,031, etc)
+const uint16_t this_node = 02;   // Address of our node in Octal format ( 04,031, etc)
 const uint16_t master00 = 00;    // Address of the other node in Octal format
 
 
@@ -36,7 +36,7 @@ void setup()
     delay(100);
   }
   
-  while (!huskylens.customText("Ensemble 01", 190, 20)) // ProjectName + CodeVersion
+  while (!huskylens.customText("Ensemble 02", 190, 20)) // ProjectName + CodeVersion
   {
     Serial.println(F("custom text failed!"));
     delay(100);
@@ -85,17 +85,16 @@ void loop()
             printResult(result);
         }    
     }
-    
 }
 
 
 void printResult(HUSKYLENSResult result)
 {
+  
     if (result.command == COMMAND_RETURN_BLOCK)
     {
       if (result.xCenter > 130 && result.xCenter < 220 && result.yCenter > 75 && result.yCenter < 175) // !!TBD!! Scanning Parameter
       {
-        
         network.update();
         
         // ColorNames - inSystem
@@ -120,6 +119,7 @@ void printResult(HUSKYLENSResult result)
           Serial.println ("72"); // C 523.25 | Red
           //===== Sending =====//
           int text = 72;
+          // const char text1[] = "72"; 
           RF24NetworkHeader header(master00);   // (Address where the data is going)
           bool ok = network.write(header, &text, sizeof(text)); // Send the data
         }
@@ -141,7 +141,7 @@ void printResult(HUSKYLENSResult result)
         }      
       }
     }
-    
+ 
     else
     {
         Serial.println("Object unknown!");
