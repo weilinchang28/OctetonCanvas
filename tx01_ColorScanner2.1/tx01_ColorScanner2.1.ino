@@ -1,3 +1,4 @@
+///// RF24 /////
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
@@ -5,11 +6,23 @@
 
 RF24 radio(9, 10); // create an RF24 object, CE, CSN 
 RF24Network network(radio);      // Include the radio in the network
+
 const uint16_t this_node = 01;   // Address of our node in Octal format ( 04,031, etc)
 const uint16_t master00 = 00;    // Address of the other node in Octal format
 
-// const byte address[6] = "00001"; // address
+const unsigned long interval = 100;  // How often (in ms) to send 'hello world' to the other unit
 
+unsigned long last_sent;     // When did we last send?
+unsigned long packets_sent;  // How many have we sent already
+
+struct payload_t 
+{  // Structure of our payload
+  unsigned long ms;
+  unsigned long counter;
+};
+
+
+///// HuskeyLens /////
 #include "HUSKYLENS.h"
 #include "SoftwareSerial.h"
 
@@ -18,6 +31,10 @@ SoftwareSerial mySerial(5, 6); // RX, TX
 //HUSKYLENS green line >> Pin 5; blue line >> Pin 6
 
 void printResult(HUSKYLENSResult result);
+
+
+
+
 
 void setup()
 {
@@ -29,7 +46,7 @@ void setup()
 //  radio.setPALevel(RF24_PA_MIN);
 //  radio.stopListening();  // set module as transmitter
   
-  Serial.begin(9600); // Suppose to be 115200
+  Serial.begin(115200); // Suppose to be 115200
 
   mySerial.begin(9600);
   while (!huskylens.begin(mySerial))
@@ -158,6 +175,6 @@ void printResult(HUSKYLENSResult result)
         Serial.println("Object unknown!");
     }
 
-   // delay(100);
+
 
 }

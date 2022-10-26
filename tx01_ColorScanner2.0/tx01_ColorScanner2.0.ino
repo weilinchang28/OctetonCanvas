@@ -108,46 +108,46 @@ void printResult(HUSKYLENSResult result)
         {
           //===== Sending =====//
           Serial.println ("74"); // D 587.33 | Blue
-          char text1[] = "74";
+          char text1 = 74;
           // const char text1[] = "74"; 
           RF24NetworkHeader header(master00);   // (Address where the data is going)
-          bool ok = network.write(header, &text1, strlen(text1)); // Send the data
+          bool ok = network.write(header, &text1, sizeof(text1)); // Send the data
         }
         if (result.ID == 2)
         {
           Serial.println ("79"); // G 783.99 | Yellow
           //===== Sending =====//
-          char text1[] = "79";
+          char text1 = 79;
           // const char text1[] = "79"; 
           RF24NetworkHeader header(master00);   // (Address where the data is going)
-          bool ok = network.write(header, &text1, strlen(text1)); // Send the data
+          bool ok = network.write(header, &text1, sizeof(text1)); // Send the data
         }
         if (result.ID == 3)
         {
           Serial.println ("72"); // C 523.25 | Red
           //===== Sending =====//
-          char text1[] = "72";
+          char text1 = 72;
           // const char text1[] = "72"; 
           RF24NetworkHeader header(master00);   // (Address where the data is going)
-          bool ok = network.write(header, &text1, strlen(text1)); // Send the data
+          bool ok = network.write(header, &text1, sizeof(text1)); // Send the data
         }
         if (result.ID == 4)
         {
           Serial.println ("81"); // A 880 | Orange
           //===== Sending =====//
-          char text1[] = "81";
+          char text1 = 81;
           // const char text1[] = "81"; 
           RF24NetworkHeader header(master00);   // (Address where the data is going)
-          bool ok = network.write(header, &text1, strlen(text1)); // Send the data
+          bool ok = network.write(header, &text1, sizeof(text1)); // Send the data
         }
         if (result.ID == 5)
         {
           Serial.println ("76"); // E 659.25 | Green
           //===== Sending =====//
-          char text1[] = "76";
+          char text1 = 76;
           // const char text1[] = "76"; 
           RF24NetworkHeader header(master00);   // (Address where the data is going)
-          bool ok = network.write(header, &text1, strlen(text1)); // Send the data
+          bool ok = network.write(header, &text1, sizeof(text1)); // Send the data
         }      
       }
       

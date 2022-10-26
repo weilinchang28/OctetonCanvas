@@ -19,7 +19,7 @@ void setup()
 {
   // while(!Serial); 
   SPI.begin();
-  Serial.begin(9600);
+  Serial.begin(115200);
   radio.begin();
   network.begin(90, this_node); // (Channel, Node Address)
   radio.setDataRate(RF24_2MBPS);
@@ -39,7 +39,7 @@ void loop()
     RF24NetworkHeader header;
     //unsigned long incomingData;
     char text1;
-    network.read(header, & text1, strlen(text1));
+    network.read(header, & text1, sizeof(text1));
     // network.read(header, &incomingData, strlen(incomingData)); // Read the incoming data
     // analogWrite(led, incomingData);    // PWM output to LED 01 (dimming)
 
