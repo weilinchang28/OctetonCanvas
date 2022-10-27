@@ -13,7 +13,6 @@ const uint16_t colorScanner02 = 02;
 const uint16_t colorScanner03 = 03;
 const uint16_t colorScanner04 = 04;
 
-// const byte address[6] = "00001"; // address 
 
 void setup() 
 {
@@ -25,9 +24,6 @@ void setup()
   radio.setDataRate(RF24_2MBPS);
 
   pinMode(led, OUTPUT);
-//  radio.openReadingPipe(0, address); // set the address
-//  radio.setPALevel(RF24_PA_MIN);
-//  radio.startListening();  // set module as receiver
 }
 
 void loop() 
@@ -37,7 +33,6 @@ void loop()
   //===== Receiving =====//
   while ( network.available() ) {     // Is there any incoming data?
     RF24NetworkHeader header;
-    //unsigned long incomingData;
 
     int text;
     
@@ -72,25 +67,7 @@ void loop()
     Serial.print (" ");
     Serial.println (output4);
     
-    // network.read(header, & text1, sizeof(text1));
-    // network.read(header, & text2, sizeof(text2));
-    // network.read(header, &incomingData, strlen(incomingData)); // Read the incoming data
-    // analogWrite(led, incomingData);    // PWM output to LED 01 (dimming)
+    analogWrite(led, text);    // PWM output to LED 01 (dimming)
   }
 
-  
-
-
-  
-   // Read the data if available in buffer
-//  if(radio.available()) 
-//  {
-//    char text[32] = {0}; 
-//    radio.read(&text, sizeof(text)); 
-//
-//    
-//    
-//    Serial.println(text);
-//
-//  } 
 }
