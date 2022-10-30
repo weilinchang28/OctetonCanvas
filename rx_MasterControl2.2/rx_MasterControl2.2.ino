@@ -64,6 +64,13 @@ void loop()
         output2 = text;
         previousValues[1] = text;
         updatePrint =true;
+        //dictionary {id:0, data: 598}
+        // serial messgae but with id number in front, 
+        // Serial.print(output2)
+        //Serial.print("2 \n"+ output2)
+        // parse the input mesage from the arudino and get id value and data seperately
+        //Serial.print(id:1, data:outupt2)
+        
       }
       
       //output2 = text;

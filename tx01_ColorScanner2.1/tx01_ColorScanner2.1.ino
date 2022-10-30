@@ -6,23 +6,10 @@
 
 RF24 radio(9, 10); // create an RF24 object, CE, CSN 
 RF24Network network(radio);      // Include the radio in the network
-
 const uint16_t this_node = 01;   // Address of our node in Octal format ( 04,031, etc)
 const uint16_t master00 = 00;    // Address of the other node in Octal format
 
-const unsigned long interval = 100;  // How often (in ms) to send 'hello world' to the other unit
 
-unsigned long last_sent;     // When did we last send?
-unsigned long packets_sent;  // How many have we sent already
-
-struct payload_t 
-{  // Structure of our payload
-  unsigned long ms;
-  unsigned long counter;
-};
-
-
-///// HuskeyLens /////
 #include "HUSKYLENS.h"
 #include "SoftwareSerial.h"
 
@@ -32,21 +19,14 @@ SoftwareSerial mySerial(5, 6); // RX, TX
 
 void printResult(HUSKYLENSResult result);
 
-
-
-
-
 void setup()
 {
   SPI.begin();
   radio.begin();
   network.begin(90, this_node);
   radio.setDataRate(RF24_2MBPS);
-//  radio.openWritingPipe(address);  // set the address
-//  radio.setPALevel(RF24_PA_MIN);
-//  radio.stopListening();  // set module as transmitter
   
-  Serial.begin(115200); // Suppose to be 115200
+  Serial.begin(9600); // Suppose to be 115200
 
   mySerial.begin(9600);
   while (!huskylens.begin(mySerial))
@@ -57,7 +37,7 @@ void setup()
     delay(100);
   }
   
-  while (!huskylens.customText("EnsembleTest", 175, 20)) // ProjectName + CodeVersion
+  while (!huskylens.customText("Ensemble 01", 190, 20)) // ProjectName + CodeVersion
   {
     Serial.println(F("custom text failed!"));
     delay(100);
@@ -106,10 +86,9 @@ void loop()
             printResult(result);
         }    
     }
-
-    //network.update();
     
 }
+
 
 void printResult(HUSKYLENSResult result)
 {
@@ -125,56 +104,49 @@ void printResult(HUSKYLENSResult result)
         {
           //===== Sending =====//
           Serial.println ("74"); // D 587.33 | Blue
-          char text1[] = "74";
-          // const char text1[] = "74"; 
+          int text = 74;
           RF24NetworkHeader header(master00);   // (Address where the data is going)
-          bool ok = network.write(header, &text1, strlen(text1)); // Send the data
+          bool ok = network.write(header, &text, sizeof(text)); // Send the data
         }
         if (result.ID == 2)
         {
           Serial.println ("79"); // G 783.99 | Yellow
           //===== Sending =====//
-          char text1[] = "79";
-          // const char text1[] = "79"; 
+          int text = 79;
           RF24NetworkHeader header(master00);   // (Address where the data is going)
-          bool ok = network.write(header, &text1, strlen(text1)); // Send the data
+          bool ok = network.write(header, &text, sizeof(text)); // Send the data
         }
         if (result.ID == 3)
         {
           Serial.println ("72"); // C 523.25 | Red
           //===== Sending =====//
-          char text1[] = "72";
-          // const char text1[] = "72"; 
+          int text = 72;
           RF24NetworkHeader header(master00);   // (Address where the data is going)
-          bool ok = network.write(header, &text1, strlen(text1)); // Send the data
+          bool ok = network.write(header, &text, sizeof(text)); // Send the data
         }
         if (result.ID == 4)
         {
           Serial.println ("81"); // A 880 | Orange
           //===== Sending =====//
-          char text1[] = "81";
-          // const char text1[] = "81"; 
+          int text = 81;
           RF24NetworkHeader header(master00);   // (Address where the data is going)
-          bool ok = network.write(header, &text1, strlen(text1)); // Send the data
+          bool ok = network.write(header, &text, sizeof(text)); // Send the data
         }
         if (result.ID == 5)
         {
           Serial.println ("76"); // E 659.25 | Green
           //===== Sending =====//
-          char text1[] = "76";
-          // const char text1[] = "76"; 
+          int text = 76;
           RF24NetworkHeader header(master00);   // (Address where the data is going)
-          bool ok = network.write(header, &text1, strlen(text1)); // Send the data
+          bool ok = network.write(header, &text, sizeof(text)); // Send the data
         }      
       }
-      
     }
     
     else
     {
         Serial.println("Object unknown!");
     }
-
 
 
 }
