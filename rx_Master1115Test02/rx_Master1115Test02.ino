@@ -5,7 +5,7 @@
 
 #define led 3
 
-RF24 radio(9, 10); // CE, CSN
+RF24 radio(7, 8); // CE, CSN
 RF24Network network(radio);      // Include the radio in the network
 const uint16_t this_node = 00;   // Address of this node in Octal format ( 04,031, etc)
 const uint16_t colorScanner01 = 01;      // Address of the other node in Octal format
@@ -15,8 +15,13 @@ const uint16_t colorScanner04 = 04;
 
 // bool updatePrint = false;
 
-int previousValues[4] = {0,0,0,0};
+// int previousValues[4] = {0,0,0,0};
+int previousVal = 0;
 
+int pedalVal1 = 1;
+int pedalVal2 = 1;
+int pedalVal3 = 1;
+int pedalVal4 = 1;
 
 void setup() 
 {
@@ -51,71 +56,82 @@ void loop()
    //// 01 //// 
     if(header.from_node == 1)
     {
-      // output1 = text;
-//      if(text != previousValues[0])
-//      {
-//        output1 = text;
-//        previousValues[0] = text;
-//        // updatePrint =true;
-//        
-//        Serial.print ("pedal off 0");
-//      }
       output1 = text;
+    
+      if (text != previousVal)
+      {
+        previousVal = text; 
+        pedalVal1 = 0;
+      }
+      else
+      {
+        pedalVal1 = 1;
+      }
     }
 
     //// 02 ////
     if(header.from_node == 2)
     {
-
-//      if(text != previousValues[1])
-//      {
-//        output2 = text;
-//        previousValues[1] = text;
-//        // updatePrint =true;
-//          
-//        Serial.print ("pedal off 1");
-//       
-//        //dictionary {id:0, data: 598}
-//        // serial messgae but with id number in front, 
-//        // Serial.print(output2)
-//        //Serial.print("2 \n"+ output2)
-//        // parse the input mesage from the arudino and get id value and data seperately
-//        //Serial.print(id:1, data:outupt2)
-//        
-//      }
-      
       output2 = text;
+    
+      if (text != previousVal)
+      {
+        previousVal = text; 
+        pedalVal2 = 0;
+      }
+      else
+      {
+        pedalVal2 = 1;
+      }
+      
     }
+
 
     //// 03 ////
     if(header.from_node == 3)
     {
-      
-    
-//      if(text != previousValues[2])
-//      {
-//        output3 = text;  
-//        previousValues[2] = text;
-//        // updatePrint =true;
-//        
-//        Serial.print ("pedal off 2");
-//      }
       output3 = text;
+    
+      // if(text != previousValues[2])
+      if (text != previousVal)
+      {
+        
+        // previousValues[2] = text;
+        // updatePrint =true;
+        
+        previousVal = text; 
+        pedalVal3 = 0;
+
+      }
+      else
+      {
+        pedalVal3 = 1;
+      }
+      
     }
+
 
     //// 04 ////
     if(header.from_node == 4)
     {
-      
-//      if(text != previousValues[3])
-//      {
-//        output4 = text;  
-//        previousValues[3] = text;
-//        //updatePrint =true;
-//        
-//        Serial.print ("pedal off 3");
-//      }
       output4 = text;
+      // if(text != previousValues[3])
+      if (text != previousVal)
+      { 
+        // previousValues[3] = text;
+        previousVal = text;
+        //updatePrint =true;
+        
+        pedalVal4 = 0;
+//        Serial.print ("Ped3 ");
+//        Serial.print (pedalVal3);
+//        Serial.print (" ");
+      }
+      else
+      {
+        pedalVal4 = 1;
+      }
+      
     }
 //    if (updatePrint)
 //    {
@@ -127,11 +143,22 @@ void loop()
 
     Serial.print (output1);
     Serial.print (" ");
+    Serial.print (pedalVal1);
+    Serial.print (" ");
+    
     Serial.print (output2);
     Serial.print (" ");
+    Serial.print (pedalVal2);
+    Serial.print (" ");
+    
     Serial.print (output3);
     Serial.print (" ");
-    Serial.println (output4);
+    Serial.print (pedalVal3);
+    Serial.print (" ");
+    
+    Serial.print (output4);
+    Serial.print (" ");
+    Serial.println (pedalVal4);
     
     analogWrite(led, text);    // PWM output to LED 01 (dimming)
   }
