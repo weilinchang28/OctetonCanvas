@@ -80,7 +80,17 @@ void loop()
 {
     if (!huskylens.request()) Serial.println(F("Fail to request data from HUSKYLENS, recheck the connection!"));
     else if(!huskylens.isLearned()) Serial.println(F("Nothing learned, press learn button on HUSKYLENS to learn one!"));
-    else if(!huskylens.available()) Serial.println(F("Blank")); // WHITE Canvas
+    // else if(!huskylens.available()) Serial.println(F("Blank")); // WHITE Canvas
+    /////
+    else if (!huskylens.available())
+    {
+      Serial.println ("0");
+      int text = 0;
+      RF24NetworkHeader header(master00);   // (Address where the data is going)
+      bool ok = network.write(header, &text, sizeof(text)); // Send the data
+      
+    }
+    /////
     else
     {
         while (huskylens.available())
