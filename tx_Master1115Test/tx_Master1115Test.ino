@@ -13,7 +13,7 @@ const uint16_t colorScanner02 = 02;
 const uint16_t colorScanner03 = 03;
 const uint16_t colorScanner04 = 04;
 
-bool updatePrint = false;
+// bool updatePrint = false;
 
 int previousValues[4] = {0,0,0,0};
 
@@ -47,49 +47,81 @@ void loop()
   
     
     network.read(header, &text, sizeof(text));
+   //// 01 //// 
     if(header.from_node == 1)
     {
+      // output1 = text;
+      // Serial.print (output1);
       if(text != previousValues[0])
       {
         output1 = text;
         previousValues[0] = text;
-        updatePrint =true;
+        // updatePrint =true;
+        
+        Serial.print ("pedal off 0");
       }
       // output1 = text;
     }
+
+    //// 02 ////
     if(header.from_node == 2)
     {
+      
+      // Serial.print (output2);
       if(text != previousValues[1])
       {
         output2 = text;
         previousValues[1] = text;
-        updatePrint =true;
+        // updatePrint =true;
+          
+        Serial.print ("pedal off 1");
+       
+        //dictionary {id:0, data: 598}
+        // serial messgae but with id number in front, 
+        // Serial.print(output2)
+        //Serial.print("2 \n"+ output2)
+        // parse the input mesage from the arudino and get id value and data seperately
+        //Serial.print(id:1, data:outupt2)
+        
       }
       
-      //output2 = text;
+      output2 = text;
     }
+
+    //// 03 ////
     if(header.from_node == 3)
     {
+      
+      // Serial.print (output3);
       if(text != previousValues[2])
       {
-        output3 = text;
+        output3 = text;  
         previousValues[2] = text;
-        updatePrint =true;
+        // updatePrint =true;
+        
+        Serial.print ("pedal off 2");
       }
     }
+
+    //// 04 ////
     if(header.from_node == 4)
     {
+      
+      // Serial.print (output4);
+      
       if(text != previousValues[3])
       {
-        output4 = text;
+        output4 = text;  
         previousValues[3] = text;
-        updatePrint =true;
+        //updatePrint =true;
+        
+        Serial.print ("pedal off 3");
       }
       // output4 = text;
     }
-    if (updatePrint)
-    {
-
+//    if (updatePrint)
+//    {
+//
     Serial.print (output1);
     Serial.print (" ");
     Serial.print (output2);
@@ -97,11 +129,11 @@ void loop()
     Serial.print (output3);
     Serial.print (" ");
     Serial.println (output4);
-    delay(100);
-    updatePrint = false;
-    }
+//    delay(100);
+//    updatePrint = false;
+//    }
     
-    // analogWrite(led, text);    // PWM output to LED 01 (dimming)
+    analogWrite(led, text);    // PWM output to LED 01 (dimming)
   }
 
 }
